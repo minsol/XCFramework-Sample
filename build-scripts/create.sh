@@ -2,12 +2,18 @@
 
 set -eux
 
-readonly PROJECT=$(xcodebuild -list -json | jq '.project')
-readonly CONFIGURATION="Release"
-readonly NAME=$(echo ${PROJECT} | jq -r '.name')
+#readonly PROJECT=$(xcodebuild -list -json | jq '.project')
+#readonly CONFIGURATION="Release"
+#readonly NAME=$(echo ${PROJECT} | jq -r '.name')
+#
+#readonly MENU=$(cat ./build-scripts/archive.json | jq)
+#readonly MENU_KEYS=$(echo ${MENU} | jq -r 'keys | .[]')
 
-readonly MENU=$(cat ./build-scripts/archive.json | jq)
-readonly MENU_KEYS=$(echo ${MENU} | jq -r 'keys | .[]')
+
+readonly CONFIGURATION="Release"
+readonly NAME="Sample"
+
+readonly MENU_KEYS=("iphoneos")
 
 # Archive Project
 
@@ -17,9 +23,9 @@ rm -rf ./build-output/${CONFIGURATION}
 frameworks=()
 
 for KEY in ${MENU_KEYS}; do
-	LABEL=$(echo ${MENU} | jq -r ".${KEY}.label")
-	SCHEME=$(echo ${MENU} | jq -r ".${KEY}.scheme")
-	DESTINATION=$(echo ${MENU} | jq -r ".${KEY}.destination")
+	LABEL="Label"
+	SCHEME="iOS"
+	DESTINATION="generic/platform=iOS"
 
 	xcodebuild \
 	'ENABLE_BITCODE=YES' \
